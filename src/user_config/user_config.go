@@ -8,8 +8,9 @@ import (
 )
 
 type periodicity struct {
-	Metrics string
-	Amount  int
+	Metrics     string
+	Denominator int
+	Addendum    int
 }
 
 type borders struct {
