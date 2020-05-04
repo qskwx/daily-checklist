@@ -7,46 +7,11 @@ import (
 	"os"
 )
 
-type periodicity struct {
-	Metrics     string
-	Denominator int
-	Addendum    int
-}
-
-type borders struct {
-	Type        string
-	LeftBorder  int
-	RightBorder int
-}
-
-type growFunction struct {
-	Type        string
-	Coefficient int
-}
-
-type grow struct {
-	Borders      borders
-	GrowFunction growFunction
-}
-
-type activity struct {
-	Name        string
-	Periodicity periodicity
-	Grow        grow
-	Group       int
-}
-
-type section struct {
-	SectionName string `json:"section"`
-	Activities  []activity
-}
-
-type tasks []section
-
 // UserConfig is a type, which contains user-specific info
 type UserConfig struct {
 	Name  string
 	Tasks tasks
+	Start string
 }
 
 // NewUserConfig create new UserConfig instance by given config.json
@@ -67,7 +32,44 @@ func NewUserConfig(filename string) (UserConfig, error) {
 	json.Unmarshal(byteValue, &user)
 
 	fmt.Printf("Name: '%s'\n", user.Name)
+	fmt.Printf("Date: '%s'\n", user.Start)
 	fmt.Println(user.Tasks[0])
 
 	return user, nil
+}
+
+type tasks []section
+
+type section struct {
+	SectionName string `json:"section"`
+	Activities  []activity
+}
+
+type activity struct {
+	Name        string
+	Periodicity periodicity
+	Grow        grow
+	Group       int
+}
+
+type grow struct {
+	Borders      borders
+	GrowFunction growFunction
+}
+
+type growFunction struct {
+	Type        string
+	Coefficient int
+}
+
+type borders struct {
+	Type        string
+	LeftBorder  int
+	RightBorder int
+}
+
+type periodicity struct {
+	Metrics     string
+	Denominator int
+	Addendum    int
 }
