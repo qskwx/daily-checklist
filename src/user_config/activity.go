@@ -8,14 +8,12 @@ type activity struct {
 	Grow        grow
 }
 
-func (act activity) IsActual(startDate time.Time, currentDate time.Time) bool {
-	passedInMetric := int(currentDate.Sub(startDate).Hours())
+func (act activity) IsActual(startTime time.Time, currentTime time.Time) bool {
+	passedInMetric := int(currentTime.Sub(startTime).Hours())
 	if act.Periodicity.Metrics == "day" {
 		passedInMetric = int(passedInMetric / 24)
 	}
-	denominator := act.Periodicity.Denominator
-	addendum := act.Periodicity.Addendum
-	result := (passedInMetric + addendum) % denominator
+	result := (passedInMetric + act.Periodicity.Denominator) % act.Periodicity.Addendum
 	return !(result == 0)
 }
 
