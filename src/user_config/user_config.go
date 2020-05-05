@@ -44,32 +44,3 @@ type section struct {
 	SectionName string `json:"section"`
 	Activities  []activity
 }
-
-type activity struct {
-	Name        string
-	Periodicity periodicity
-	Grow        grow
-	Group       int
-}
-
-type grow struct {
-	Borders      borders
-	GrowFunction growFunction
-}
-
-type growFunction struct {
-	Type        string
-	Coefficient int
-}
-
-type borders struct {
-	Type        string
-	LeftBorder  int
-	RightBorder int
-}
-
-type periodicity struct {
-	Metrics     string
-	Denominator int
-	Addendum    int
-}
