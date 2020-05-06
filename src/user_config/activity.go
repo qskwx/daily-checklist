@@ -3,25 +3,25 @@ package userconfig
 import "time"
 
 type activity struct {
-	Name        string
-	Periodicity periodicity
-	Grow        grow
+	name        string
+	periodicity periodicity
+	grow        grow
 }
 
 func (act activity) IsActual(startTime time.Time, currentTime time.Time) bool {
 	passedInMetric := act.passedInMetric(startTime, currentTime)
-	result := (passedInMetric + act.Periodicity.Denominator) % act.Periodicity.Addendum
+	result := (passedInMetric + act.periodicity.denominator) % act.periodicity.addendum
 	return !(result == 0)
 }
 
-func (act activity) GetSummary(startTime time.Time, currentTime time.Time) bool {
+func (act activity) GetSummary(startTime time.Time, currentTime time.Time) string {
 	passedInMetric := act.passedInMetric(startTime, currentTime)
-	result := (passedInMetric + act.Periodicity.Denominator) % act.Periodicity.Addendum
-	return !(result == 0)
+	grow := act.getGrow(passedInMetric)
+	return string(grow) + " " + act.name
 }
 
 func (act activity) getGrow(passedInMetric int) int {
-	switch act.Grow.GrowFunction.Type {
+	switch act.grow.growFunction._type {
 	case "monotonous":
 		return act.getMonotonousGrow(passedInMetric)
 	default:
@@ -30,43 +30,43 @@ func (act activity) getGrow(passedInMetric int) int {
 }
 
 func (act activity) getConstGrow(passedInMetric int) int {
-	return act.Grow.Borders.LeftBorder
+	return act.grow.borders.leftBorder
 }
 
 func (act activity) getMonotonousGrow(passedInMetric int) int {
-	expected := act.Grow.Borders.LeftBorder + act.Grow.GrowFunction.Coefficient*passedInMetric
-	if expected > act.Grow.Borders.RightBorder {
-		return act.Grow.Borders.RightBorder
+	expected := act.grow.borders.leftBorder + act.grow.growFunction.coefficient*passedInMetric
+	if expected > act.grow.borders.rightBorder {
+		return act.grow.borders.rightBorder
 	}
 	return expected
 }
 
 func (act activity) passedInMetric(startTime time.Time, currentTime time.Time) int {
 	passedInMetric := int(currentTime.Sub(startTime).Hours())
-	if act.Periodicity.Metrics == "day" {
+	if act.periodicity.metrics == "day" {
 		passedInMetric = int(passedInMetric / 24)
 	}
 	return passedInMetric
 }
 
 type grow struct {
-	Borders      borders
-	GrowFunction growFunction
+	borders      borders
+	growFunction growFunction
 }
 
 type growFunction struct {
-	Type        string
-	Coefficient int
+	_type       string
+	coefficient int
 }
 
 type borders struct {
-	Type        string
-	LeftBorder  int
-	RightBorder int
+	_type       string
+	leftBorder  int
+	rightBorder int
 }
 
 type periodicity struct {
-	Metrics     string
-	Denominator int
-	Addendum    int
+	metrics     string
+	denominator int
+	addendum    int
 }
