@@ -1,27 +1,39 @@
 package userconfig
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
-type activity struct {
-	name        string
+type Activity struct {
+	Name        string
 	periodicity periodicity
-	grow        grow
+	Grow        Grow
 }
 
-func (act activity) IsActual(startTime time.Time, currentTime time.Time) bool {
+func (act Activity) IsActual(startTime time.Time, currentTime time.Time) bool {
 	passedInMetric := act.passedInMetric(startTime, currentTime)
-	result := (passedInMetric + act.periodicity.denominator) % act.periodicity.addendum
+	addendum := act.periodicity.Addendum
+	if addendum <= 0 {
+		return true
+	}
+	result := (passedInMetric + act.periodicity.Denominator) % addendum
 	return !(result == 0)
 }
 
-func (act activity) GetSummary(startTime time.Time, currentTime time.Time) string {
+func (act Activity) GetSummary(startTime time.Time, currentTime time.Time) string {
 	passedInMetric := act.passedInMetric(startTime, currentTime)
 	grow := act.getGrow(passedInMetric)
-	return string(grow) + " " + act.name
+	summary := ""
+	if grow != 0 {
+		summary += strconv.Itoa(grow) + " "
+	}
+	summary += act.Name
+	return summary
 }
 
-func (act activity) getGrow(passedInMetric int) int {
-	switch act.grow.growFunction._type {
+func (act Activity) getGrow(passedInMetric int) int {
+	switch act.Grow.growFunction.Type {
 	case "monotonous":
 		return act.getMonotonousGrow(passedInMetric)
 	default:
@@ -29,44 +41,43 @@ func (act activity) getGrow(passedInMetric int) int {
 	}
 }
 
-func (act activity) getConstGrow(passedInMetric int) int {
-	return act.grow.borders.leftBorder
+func (act Activity) getConstGrow(passedInMetric int) int {
+	return act.Grow.Borders.Left
 }
 
-func (act activity) getMonotonousGrow(passedInMetric int) int {
-	expected := act.grow.borders.leftBorder + act.grow.growFunction.coefficient*passedInMetric
-	if expected > act.grow.borders.rightBorder {
-		return act.grow.borders.rightBorder
+func (act Activity) getMonotonousGrow(passedInMetric int) int {
+	expected := act.Grow.Borders.Left + act.Grow.growFunction.Coefficient*passedInMetric
+	if expected > act.Grow.Borders.Right {
+		return act.Grow.Borders.Right
 	}
 	return expected
 }
 
-func (act activity) passedInMetric(startTime time.Time, currentTime time.Time) int {
+func (act Activity) passedInMetric(startTime time.Time, currentTime time.Time) int {
 	passedInMetric := int(currentTime.Sub(startTime).Hours())
-	if act.periodicity.metrics == "day" {
+	if act.periodicity.Metrics == "day" {
 		passedInMetric = int(passedInMetric / 24)
 	}
 	return passedInMetric
 }
 
-type grow struct {
-	borders      borders
+type Grow struct {
+	Borders      Borders
 	growFunction growFunction
 }
 
 type growFunction struct {
-	_type       string
-	coefficient int
+	Type        string
+	Coefficient int
 }
 
-type borders struct {
-	_type       string
-	leftBorder  int
-	rightBorder int
+type Borders struct {
+	Left  int
+	Right int
 }
 
 type periodicity struct {
-	metrics     string
-	denominator int
-	addendum    int
+	Metrics     string
+	Denominator int
+	Addendum    int
 }
