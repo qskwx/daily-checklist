@@ -33,7 +33,7 @@ func (act Activity) GetSummary(startTime time.Time, currentTime time.Time) strin
 }
 
 func (act Activity) getGrow(passedInMetric int) int {
-	switch act.Grow.growFunction.Type {
+	switch act.Grow.GrowFunction.Type {
 	case "monotonous":
 		return act.getMonotonousGrow(passedInMetric)
 	default:
@@ -46,7 +46,7 @@ func (act Activity) getConstGrow(passedInMetric int) int {
 }
 
 func (act Activity) getMonotonousGrow(passedInMetric int) int {
-	expected := act.Grow.Borders.Left + act.Grow.growFunction.Coefficient*passedInMetric
+	expected := act.Grow.Borders.Left + act.Grow.GrowFunction.Coefficient*passedInMetric
 	if expected > act.Grow.Borders.Right {
 		return act.Grow.Borders.Right
 	}
@@ -63,10 +63,10 @@ func (act Activity) passedInMetric(startTime time.Time, currentTime time.Time) i
 
 type Grow struct {
 	Borders      Borders
-	growFunction growFunction
+	GrowFunction GrowFunction `json:"grow-function,"`
 }
 
-type growFunction struct {
+type GrowFunction struct {
 	Type        string
 	Coefficient int
 }
