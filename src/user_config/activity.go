@@ -7,18 +7,14 @@ import (
 
 type Activity struct {
 	Name        string
-	periodicity periodicity
+	Periodicity Periodicity
 	Grow        Grow
 }
 
 func (act Activity) IsActual(startTime time.Time, currentTime time.Time) bool {
 	passedInMetric := act.passedInMetric(startTime, currentTime)
-	addendum := act.periodicity.Addendum
-	if addendum <= 0 {
-		return true
-	}
-	result := (passedInMetric + act.periodicity.Denominator) % addendum
-	return !(result == 0)
+	result := (passedInMetric + act.Periodicity.Addendum) % act.Periodicity.Denominator
+	return result == 0
 }
 
 func (act Activity) GetSummary(startTime time.Time, currentTime time.Time) string {
@@ -54,10 +50,7 @@ func (act Activity) getMonotonousGrow(passedInMetric int) int {
 }
 
 func (act Activity) passedInMetric(startTime time.Time, currentTime time.Time) int {
-	passedInMetric := int(currentTime.Sub(startTime).Hours())
-	if act.periodicity.Metrics == "day" {
-		passedInMetric = int(passedInMetric / 24)
-	}
+	passedInMetric := int(currentTime.Sub(startTime).Hours() / 24)
 	return passedInMetric
 }
 
@@ -76,8 +69,7 @@ type Borders struct {
 	Right int
 }
 
-type periodicity struct {
-	Metrics     string
+type Periodicity struct {
 	Denominator int
 	Addendum    int
 }
