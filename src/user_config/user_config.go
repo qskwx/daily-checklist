@@ -16,7 +16,7 @@ type UserConfig struct {
 }
 
 // NewUserConfig create new UserConfig instance by given config.json
-func NewUserConfig(filename string) (UserConfig, error) {
+func UserConfigFabric(filename string) (UserConfig, error) {
 	var user UserConfig
 
 	configFile, err := os.Open(filename)
