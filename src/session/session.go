@@ -2,6 +2,8 @@ package session
 
 import (
 	userconfig "daily-checklist/src/user_config"
+	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -25,6 +27,14 @@ func (ss *session) setDone(actID string) error {
 		return err
 	}
 	return nil
+}
+
+func (ss session) show() ([]byte, error) {
+	byteArray, err := json.Marshal(ss.categories)
+	if err != nil {
+		return nil, fmt.Errorf(fmt.Sprintf("Unable to extract session info: %s", err))
+	}
+	return byteArray, nil
 }
 
 func IsExpired() int {
