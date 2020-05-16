@@ -20,12 +20,8 @@ func categoriesFabric(activities map[string][]string) []category {
 
 func (cats *categories) setDone(mixedID string) error {
 	for _, category := range *cats {
-		// probably index error
 		if strings.HasPrefix(mixedID, category.prefix) {
-			activityID := mixedID[len(category.prefix):]
-			if err := cats.setDone(activityID); err != nil {
-				return err
-			}
+			return category.setDone(mixedID)
 		}
 	}
 	return fmt.Errorf("unable to find category for activity id = '%s'", mixedID)
