@@ -20,11 +20,10 @@ func activitiesFabric(prefix string, acts []string) []activity {
 }
 
 func (acts *activities) setDone(actID string) error {
-	for _, activity := range *acts {
-		if activity.id == actID {
-			activity.done = true
-			return nil
+	for idx := range *acts {
+		if (*acts)[idx].Id() == actID {
+			return (*acts)[idx].SetDone()
 		}
 	}
-	return fmt.Errorf("unable to found activity with mixed id = '%s'", actID)
+	return fmt.Errorf("unable to found activity with id = '%s'", actID)
 }
