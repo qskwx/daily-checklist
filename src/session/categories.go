@@ -26,3 +26,7 @@ func (cats *categories) setDone(mixedID string) error {
 	}
 	return fmt.Errorf("unable to find category for activity id = '%s'", mixedID)
 }
+
+func toCharStr(i int) string {
+	return string('a' + i)
+}
