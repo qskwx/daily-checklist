@@ -2,45 +2,30 @@ package session
 
 import (
 	userconfig "daily-checklist/src/user_config"
-	"encoding/json"
 	"fmt"
 	"time"
 )
 
-type session struct {
+type Session struct {
 	user       userconfig.UserConfig
 	categories categories
 }
 
 // TODO: check username as input
 
-func sessionFabric(username string) session {
+func SessionFabric(username string) Session {
+	username = fmt.Sprintf("src/user_config/configs/%s.json", username) // TODO: reformat this!
 	user, _ := userconfig.UserConfigFabric(username)
-	ss := session{
+	ss := Session{
 		user:       user,
 		categories: categoriesFabric(user.GetCurrentActivities(time.Now()))}
 	return ss
 }
 
-func (ss *session) setDone(actID string) error {
-	if err := ss.categories.setDone(actID); err != nil {
-		return err
-	}
-	return nil
+func (ss *Session) SetDone(actID string) error {
+	return ss.categories.setDone(actID)
 }
 
-func (ss session) show() ([]byte, error) {
-	byteArray, err := json.Marshal(ss.categories)
-	if err != nil {
-		return nil, fmt.Errorf(fmt.Sprintf("Unable to extract session info: %s", err))
-	}
-	return byteArray, nil
-}
-
-func IsExpired() int {
-	return 0
-}
-
-func toCharStr(i int) string {
-	return string('a' + i)
+func (ss Session) Categories() categories {
+	return ss.categories
 }
