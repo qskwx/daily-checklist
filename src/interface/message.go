@@ -1,4 +1,4 @@
-package bot_interface
+package iface
 
 import "daily-checklist/src/session"
 
