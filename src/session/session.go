@@ -11,15 +11,15 @@ type Session struct {
 	categories categories
 }
 
-// TODO: check username as input
-
-func SessionFabric(username string) Session {
-	username = fmt.Sprintf("src/user_config/configs/%s.json", username) // TODO: reformat this!
-	user, _ := userconfig.UserConfigFabric(username)
-	ss := Session{
+func SessionFabric(username string) (Session, error) {
+	username = fmt.Sprintf("configs/%s.json", username) // TODO: reformat
+	user, err := userconfig.UserConfigFabric(username)
+	if err != nil {
+		return Session{}, err
+	}
+	return Session{
 		user:       user,
-		categories: categoriesFabric(user.GetCurrentActivities(time.Now()))}
-	return ss
+		categories: categoriesFabric(user.GetCurrentActivities(time.Now()))}, nil
 }
 
 func (ss *Session) SetDone(actID string) error {
