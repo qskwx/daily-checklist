@@ -26,7 +26,7 @@ func (act activity) Done() bool {
 	return act.done
 }
 
-func (act *activity) SetDone() error {
+func (act *activity) SetDone() (err error) {
 	act.done = true
-	return nil
+	return
 }
