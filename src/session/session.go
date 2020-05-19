@@ -7,8 +7,9 @@ import (
 )
 
 type Session struct {
-	user       userconfig.UserConfig
-	categories categories
+	user         userconfig.UserConfig
+	categories   categories
+	creationTime time.Time
 }
 
 func SessionFabric(username string) (Session, error) {
@@ -17,9 +18,10 @@ func SessionFabric(username string) (Session, error) {
 	if err != nil {
 		return Session{}, err
 	}
+	creationTime := time.Now()
 	return Session{
 		user:       user,
-		categories: categoriesFabric(user.GetCurrentActivities(time.Now()))}, nil
+		categories: categoriesFabric(user.GetCurrentActivities(creationTime))}, nil
 }
 
 func (ss *Session) SetDone(actID string) error {
@@ -28,4 +30,9 @@ func (ss *Session) SetDone(actID string) error {
 
 func (ss Session) Categories() categories {
 	return ss.categories
+}
+
+func (ss Session) IsActual() bool {
+	passed := time.Now().Sub(ss.creationTime).Hours()
+	return passed < 24
 }
