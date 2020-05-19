@@ -10,12 +10,12 @@ func SessionsFabric() Sessions {
 
 func (sessions Sessions) Session(username string) (ss Session, err error) {
 	ss, ok := sessions.sessions[username]
-	if !ok {
-		ss, err = SessionFabric(username)
+	if !ok || !ss.IsActual() {
+		ss, err := SessionFabric(username)
 		if err != nil {
-			return
+			return ss, err
 		}
 		sessions.sessions[username] = ss
 	}
-	return
+	return sessions.sessions[username], nil
 }
