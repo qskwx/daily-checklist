@@ -20,8 +20,9 @@ func SessionFabric(username string) (Session, error) {
 	}
 	creationTime := time.Now()
 	return Session{
-		user:       user,
-		categories: categoriesFabric(user.GetCurrentActivities(creationTime))}, nil
+		user:         user,
+		categories:   categoriesFabric(user.GetCurrentActivities(creationTime)),
+		creationTime: creationTime}, nil
 }
 
 func (ss *Session) SetDone(actID string) error {
