@@ -9,7 +9,12 @@ import (
 	"time"
 )
 
+// UserConfig is a type, which contains user-specific info
 type UserConfig struct {
+	userConfig
+}
+
+type userConfig struct {
 	Name     string
 	Start    string
 	Sections sections.Sections
