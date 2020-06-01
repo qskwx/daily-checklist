@@ -1,6 +1,7 @@
 package userconfig
 
 import (
+	"daily-checklist/src/user_config/sections"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -8,15 +9,14 @@ import (
 	"time"
 )
 
-// UserConfig is a type, which contains user-specific info
 type UserConfig struct {
 	Name     string
 	Start    string
-	Sections sections
+	Sections sections.Sections
 }
 
-// NewUserConfig create new UserConfig instance by given config.json
-func UserConfigFabric(filename string) (UserConfig, error) {
+// Fabric create new UserConfig instance by given config.json
+func Fabric(filename string) (UserConfig, error) {
 	var user UserConfig
 
 	configFile, err := os.Open(filename)
@@ -26,31 +26,14 @@ func UserConfigFabric(filename string) (UserConfig, error) {
 		fmt.Println(err)
 		return user, err
 	}
-	byteValue, _ := ioutil.ReadAll(configFile)
+	byteValue, err := ioutil.ReadAll(configFile)
 	json.Unmarshal(byteValue, &user)
 	return user, nil
 }
 
+// GetCurrentActivities extract all activites related for particular day
 func (conf UserConfig) GetCurrentActivities(currentTime time.Time) map[string][]string {
 	startTime, _ := time.Parse("2006-02-01 15:04", conf.Start)
-	currentActivities := make(map[string][]string)
-	for _, section := range conf.Sections {
-		sectionActivities := make([]string, 0)
-		for _, act := range section.Activities {
-			if act.IsActual(startTime, currentTime) {
-				sectionActivities = append(sectionActivities, act.GetSummary(startTime, currentTime))
-			}
-		}
-		if len(sectionActivities) > 0 {
-			currentActivities[section.Name] = sectionActivities
-		}
-	}
+	currentActivities := conf.Sections.GetCurrentActivities(startTime, currentTime)
 	return currentActivities
-}
-
-type sections []section
-
-type section struct {
-	Name       string
-	Activities []Activity
 }
