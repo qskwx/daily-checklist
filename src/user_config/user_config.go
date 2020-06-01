@@ -32,7 +32,16 @@ func Fabric(filename string) (UserConfig, error) {
 		return user, err
 	}
 	byteValue, err := ioutil.ReadAll(configFile)
-	json.Unmarshal(byteValue, &user)
+	if err != nil {
+		fmt.Println(err)
+		return user, err
+	}
+	err = json.Unmarshal(byteValue, &user)
+
+	if err != nil {
+		fmt.Println(err)
+		return user, err
+	}
 	return user, nil
 }
 
