@@ -1,6 +1,6 @@
 package grow
 
 type borders struct {
-	left  int
-	right int
+	Left  int
+	Right int
 }
