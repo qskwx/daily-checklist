@@ -1,11 +1,11 @@
 package periodicity
 
 type Periodicity struct {
-	denominator int
-	addendum    int
+	Denominator int
+	Addendum    int
 }
 
 func (period Periodicity) IsActual(passedInMetric int) bool {
-	result := (passedInMetric + period.addendum) % period.denominator
+	result := (passedInMetric + period.Addendum) % period.Denominator
 	return result == 0
 }
