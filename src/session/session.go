@@ -14,7 +14,7 @@ type Session struct {
 
 func SessionFabric(username string) (Session, error) {
 	username = fmt.Sprintf("configs/%s.json", username) // TODO: reformat
-	user, err := userconfig.UserConfigFabric(username)
+	user, err := userconfig.Fabric(username)
 	if err != nil {
 		return Session{}, err
 	}
@@ -33,7 +33,7 @@ func (ss Session) Categories() categories {
 	return ss.categories
 }
 
-func (ss Session) IsActual() bool {
-	passed := time.Now().Sub(ss.creationTime).Hours()
+func (ss Session) IsActual(now time.Time) bool {
+	passed := now.Sub(ss.creationTime).Hours()
 	return passed < 24
 }
