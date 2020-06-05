@@ -1,6 +1,6 @@
 package grow
 
 type growFunction struct {
-	GrowType    string
+	GrowType    string `json:"type"`
 	Coefficient float64
 }
