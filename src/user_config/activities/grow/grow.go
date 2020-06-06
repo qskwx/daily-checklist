@@ -3,7 +3,7 @@ package grow
 type Grow struct {
 	Borders      borders
 	GrowFunction growFunction `json:"grow-function,"`
-	ShowF        show
+	ShowF        show         `json:"show"`
 }
 
 func (grow Grow) Show(passedInMetric int) string {
