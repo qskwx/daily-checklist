@@ -3,6 +3,7 @@ package iface
 import (
 	"daily-checklist/src/session"
 	"log"
+	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -40,7 +41,7 @@ func (bot *Bot) Loop() {
 		if update.Message == nil { // ignore any non-Message Updates
 			continue
 		}
-		if update.Message.From.UserName != "" { // ignore all exclude me
+		if update.Message.From.UserName != "vo0xr0c" { // ignore all exclude me
 			log.Printf("Request form [%s] ignored", update.Message.From.UserName)
 			continue
 		}
@@ -53,7 +54,7 @@ func (bot *Bot) Loop() {
 }
 
 func (bot *Bot) processUpdate(update tgbotapi.Update) (reply string) {
-	ss, err := bot.sessions.Session(update.Message.From.UserName)
+	ss, err := bot.sessions.Session(update.Message.From.UserName, time.Now())
 	if err != nil {
 		return err.Error()
 	}
