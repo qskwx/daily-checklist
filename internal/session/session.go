@@ -35,7 +35,7 @@ func (ss Session) Categories() categories {
 
 func (ss Session) IsActual(now time.Time) bool {
 	passed := daysPast(ss.user.StartTime(), time.Now())
-	return passed > ss.pastFromStart
+	return passed == ss.pastFromStart
 }
 
 func daysPast(startTime time.Time, now time.Time) int {
