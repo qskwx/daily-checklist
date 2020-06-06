@@ -47,7 +47,12 @@ func Fabric(filename string) (UserConfig, error) {
 
 // GetCurrentActivities extract all activites related for particular day
 func (conf UserConfig) GetCurrentActivities(currentTime time.Time) map[string][]string {
-	startTime, _ := time.Parse("2006-02-01 15:04", conf.Start)
-	currentActivities := conf.Sections.GetCurrentActivities(startTime, currentTime)
+	currentActivities := conf.Sections.GetCurrentActivities(conf.StartTime(), currentTime)
 	return currentActivities
+}
+
+// StartTime is a field Start getter
+func (conf UserConfig) StartTime() time.Time {
+	start, _ := time.Parse("2006-02-01 15:04", conf.Start)
+	return start
 }
