@@ -7,9 +7,9 @@ import (
 )
 
 type Session struct {
-	user         userconfig.UserConfig
-	categories   categories
-	creationTime time.Time
+	user          userconfig.UserConfig
+	categories    categories
+	pastFromStart int
 }
 
 func SessionFabric(username string) (Session, error) {
@@ -18,11 +18,11 @@ func SessionFabric(username string) (Session, error) {
 	if err != nil {
 		return Session{}, err
 	}
-	creationTime := time.Now()
+	pastFromStart := daysPast(user.StartTime(), time.Now())
 	return Session{
-		user:         user,
-		categories:   categoriesFabric(user.GetCurrentActivities(creationTime)),
-		creationTime: creationTime}, nil
+		user:          user,
+		categories:    categoriesFabric(user.GetCurrentActivities(time.Now())),
+		pastFromStart: pastFromStart}, nil
 }
 
 func (ss *Session) SetDone(actID string) error {
@@ -34,6 +34,12 @@ func (ss Session) Categories() categories {
 }
 
 func (ss Session) IsActual(now time.Time) bool {
-	passed := now.Sub(ss.creationTime).Hours()
-	return passed < 24
+	passed := daysPast(ss.user.StartTime(), time.Now())
+	return passed > ss.pastFromStart
+}
+
+func daysPast(startTime time.Time, now time.Time) int {
+	pastFromStart := int(now.Sub(startTime).Hours() / 24)
+	fmt.Println("Past from start: ", pastFromStart)
+	return pastFromStart
 }
