@@ -40,6 +40,5 @@ func (ss Session) IsActual(now time.Time) bool {
 
 func daysPast(startTime time.Time, now time.Time) int {
 	pastFromStart := int(now.Sub(startTime).Hours() / 24)
-	fmt.Println("Past from start: ", pastFromStart)
 	return pastFromStart
 }
