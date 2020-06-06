@@ -1,7 +1,7 @@
 package session
 
 import (
-	userconfig "daily-checklist/src/user_config"
+	userconfig "daily-checklist/internal/user_config"
 	"fmt"
 	"time"
 )

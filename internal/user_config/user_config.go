@@ -1,7 +1,7 @@
 package userconfig
 
 import (
-	"daily-checklist/src/user_config/sections"
+	"daily-checklist/internal/user_config/sections"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"

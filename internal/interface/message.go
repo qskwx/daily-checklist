@@ -1,6 +1,6 @@
 package iface
 
-import "daily-checklist/src/session"
+import "daily-checklist/internal/session"
 
 func constructMessage(ss session.Session) string {
 	message := ""

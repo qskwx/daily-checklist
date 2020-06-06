@@ -1,7 +1,7 @@
 package sections
 
 import (
-	"daily-checklist/src/user_config/activities"
+	"daily-checklist/internal/user_config/activities"
 	"time"
 )
 

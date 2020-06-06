@@ -1,7 +1,7 @@
 package main
 
 import (
-	bot "daily-checklist/src/interface"
+	bot "daily-checklist/internal/interface"
 )
 
 func main() {

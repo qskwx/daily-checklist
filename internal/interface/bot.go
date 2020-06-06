@@ -1,7 +1,7 @@
 package iface
 
 import (
-	"daily-checklist/src/session"
+	"daily-checklist/internal/session"
 	"log"
 	"time"
 

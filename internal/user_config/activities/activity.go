@@ -1,8 +1,8 @@
 package activities
 
 import (
-	"daily-checklist/src/user_config/activities/grow"
-	"daily-checklist/src/user_config/activities/periodicity"
+	"daily-checklist/internal/user_config/activities/grow"
+	"daily-checklist/internal/user_config/activities/periodicity"
 	"time"
 )
 
