@@ -34,6 +34,54 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "section2",
+            "activities": [
+                {
+                    "name": "activity0",
+                    "grow": {
+                        "borders": {
+                            "left": 0,
+                            "right": 100
+                        },
+                        "grow-function": {
+                            "type": "monotonous",
+                            "coefficient": 1
+                        },
+                        "show": {
+                            "dividers": [2, 3, 6]
+                        }
+                    },
+                    "periodicity": {
+                        "denominator": 2,
+                        "addendum": 0
+                    }
+                },
+                {
+                    "name": "activity1",
+                    "grow": {
+                        "borders": {
+                            "left": 50,
+                            "right": 60
+                        },
+                        "grow-function": {
+                            "type": "monotonous",
+                            "coefficient": 0.5
+                        }
+                    },
+                    "periodicity": {
+                        "addendum": 1,
+                        "denominator": 2
+                    }
+                },
+                {
+                    "name": "activity2",
+                    "periodicity": {
+                        "denominator": 1
+                    }
+                }
+            ]
         }
     ]
 }
