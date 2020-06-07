@@ -1,0 +1,39 @@
+{ 
+    "name": "testname", 
+    "start": "2020-01-05 05:00",
+       "sections": [
+        {
+            "name": "section1",
+            "activities": [
+                {
+                    "name": "acitivity0",
+                    "periodicity": {
+                        "denominator": 3,
+                        "addendum": 7
+                    }
+                },
+                {
+                    "name": "acitivity1",
+                    "periodicity": {
+                        "denominator": 2,
+                        "addendum": 1
+                    }
+                },
+                {
+                    "name": "acitivity2",
+                    "periodicity": {
+                        "denominator": 2,
+                        "addendum": 0
+                    }
+                },
+                {
+                    "name": "acitivity3",
+                    "periodicity": {
+                        "denominator": 3,
+                        "addendum": 1
+                    }
+                }
+            ]
+        }
+    ]
+}
