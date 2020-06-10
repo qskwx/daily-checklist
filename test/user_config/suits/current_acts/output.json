@@ -1,0 +1,114 @@
+[
+    {
+        "current_time": "2020-02-05 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity1"
+            ], 
+            "section2": [
+                "50 activity1", 
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-03-05 04:00",
+        "result": {
+            "section1": [
+                "0 acitivity1"
+            ], 
+            "section2": [
+                "50 activity1", 
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-03-05 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity0",
+                "0 acitivity2",
+                "0 acitivity3"
+            ], 
+            "section2": [
+                "2 activity0",
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-04-05 23:00",
+        "result": {
+            "section1": [
+                "0 acitivity1"
+            ], 
+            "section2": [
+                "51 activity1", 
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-06-05 04:00",
+        "result": {
+            "section1": [
+                "0 acitivity2"
+            ], 
+            "section2": [
+                "4 activity0",
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-21-05 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity0",
+                "0 acitivity2",
+                "0 acitivity3"
+            ], 
+            "section2": [
+                "20 activity0",
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-22-05 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity1"
+            ], 
+            "section2": [
+                "60 activity1", 
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-23-05 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity2"
+            ], 
+            "section2": [
+                "22 activity0",
+                "0 activity2"
+            ]
+        }
+    },
+    {
+        "current_time": "2020-07-06 06:00",
+        "result": {
+            "section1": [
+                "0 acitivity1"
+            ], 
+            "section2": [
+                "60 activity1", 
+                "0 activity2"
+            ]
+        }
+    }
+]
